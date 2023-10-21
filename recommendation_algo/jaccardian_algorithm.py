@@ -7,7 +7,29 @@ from sklearn.linear_model import LinearRegression
 
 app = Flask(__name__)
 
-cards = ["card1", "card2"]
+# TODO
+cards = [
+    "United Quest℠ Card",
+    "American Express® Gold Card",
+    "Visa Signature® Flagship Rewards Credit Card",
+    "Capital One Venture Rewards Credit Card",
+    "Amazon Business Prime American Express Card",
+    "Hilton Honors Business Card",
+    "Blue Cash Preferred® Card from American Express",
+    "Chase Freedom Unlimited®",
+    "Capital One Quicksilver Student Cash Rewards Credit Card",
+    "Costco Anywhere Visa Card by Citi",
+    "United℠ Business Card",
+    "Discover it® Student Chrome",
+    "Wyndham Rewards Earner® Card",
+    "PenFed Pathfinder® Rewards Visa Signature® Card",
+    "Discover it® Student Cash Back",
+    "Chase Sapphire Preferred",
+    "Discover it® Cash Back",
+    "The Ink Business Cash® Credit Card",
+    "Chase Sapphire Reserve",
+    "BankAmericard® Credit Card",
+]
 
 
 @app.route("/api/recommend", methods=["POST"])
