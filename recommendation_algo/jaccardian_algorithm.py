@@ -34,7 +34,12 @@ def recommend():
     budget = data.get("budget")
 
     fprint = userToBin(
-        occupation, travelFrequency, travelInterest, creditScore, income, budget
+        occupation,
+        travelFrequency == "true",
+        travelInterest == "true",
+        creditScore,
+        income,
+        budget,
     )
 
     fobj = open("bin_users.csv")
