@@ -1,10 +1,14 @@
 import pandas as pd, numpy as np
 from bitarray import bitarray
+import csv
+
 from flask import Flask, request
 from userToBin import userToBin
 from sklearn.linear_model import LinearRegression
 
 app = Flask(__name__)
+
+cards = ["card1", "card2"]
 
 
 @app.route("/api/recommend", methods=["POST"])
@@ -34,26 +38,62 @@ def recommend():
         occupation, travelFrequency, travelInterest, creditScore, income, budget
     )
 
-    users = pd.read_csv("bin_users.csv")
-    colNum = len(users.columns)
-    sim_cards = np.ndarray((colNum - 2, len(users)))
-    user_sims = np.ndarray((colNum - 2, len(users)))
+    fobj = open("bin_users.csv")
 
-    cards = []  # TODO gen list of cards
+    nRows = len(fobj.readlines()) - 1
+    fobj.close()
 
-    for idx, row in users.iterrows():
+    fobj = open("bin_users.csv")
+    data = csv.DictReader(fobj)
+    sim_cards = np.zeros((len(cards), nRows))
+    user_sims = np.zeros((len(cards), nRows))
+    print(sim_cards, user_sims)
+    for idx, row in enumerate(data):
         binary = bitarray(row["fingerprint"])
         fprintbinary = bitarray(fprint)
         differences = binary ^ fprintbinary
         num_differences = differences.count(1)
         user_similarity = 1 - (num_differences / 4)
-        for i in range(colNum):
-            sim_cards[i][idx] = users.iloc[:, i + 2]
+        for i in range(len(cards)):
+            sim_cards[i][idx] = row[cards[i]]
             user_sims[i][idx] = user_similarity
     recommends = {}
-    for j in range(colNum):
+    for j in range(len(cards)):
         x = user_sims[j].reshape((-1, 1))
         y = sim_cards[j]
         model = LinearRegression().fit(x, y)
-        recommends[cards[j]] = (model.intercept_ + model.coef_) > 0.5
+        recommends[cards[j]] = bool((model.intercept_ + model.coef_) > 0.5)
+    fobj.close()
     return recommends
+
+
+# cards = ["card1", "card2"]  # TODO gen list of cards
+
+# fprint = userToBin("midCareer", True, True, "great", "55000", "200")
+# fobj = open("bin_users.csv")
+
+# nRows = len(fobj.readlines()) - 1
+# fobj.close()
+
+# fobj = open("bin_users.csv")
+# data = csv.DictReader(fobj)
+# sim_cards = np.zeros((len(cards), nRows))
+# user_sims = np.zeros((len(cards), nRows))
+# print(sim_cards, user_sims)
+# for idx, row in enumerate(data):
+#     binary = bitarray(row["fingerprint"])
+#     fprintbinary = bitarray(fprint)
+#     differences = binary ^ fprintbinary
+#     num_differences = differences.count(1)
+#     user_similarity = 1 - (num_differences / 4)
+#     for i in range(len(cards)):
+#         sim_cards[i][idx] = row[cards[i]]
+#         user_sims[i][idx] = user_similarity
+# recommends = {}
+# for j in range(len(cards)):
+#     x = user_sims[j].reshape((-1, 1))
+#     y = sim_cards[j]
+#     model = LinearRegression().fit(x, y)
+#     recommends[cards[j]] = bool((model.intercept_ + model.coef_) > 0.5)
+# print(recommends)
+# fobj.close()

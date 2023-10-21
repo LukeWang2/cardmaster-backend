@@ -27,10 +27,7 @@ disliked cards
 """elite - occupation:mid-career,business owner,executive ; credit score: great,exellent ; income:100 000+ ; budget:100+"""
 users = pd.read_csv("users.csv")
 fobj = open("bin_users.csv", "w")
-fieldnames = [
-    "username",
-    "fingerprint",
-]  # TODO fill this in
+fieldnames = ["username", "fingerprint", "card1", "card2"]  # TODO fill this in
 refined_users = csv.DictWriter(fobj, fieldnames=fieldnames)
 refined_users.writeheader()
 occupations = [
@@ -76,10 +73,16 @@ for (
         row["budget"],
     )
     # Dump into another csv file
-    refined_users.writerow([row["username"], user_fingerprint])
+    refined_users.writerow(
+        {
+            "username": row["username"],
+            "fingerprint": user_fingerprint,
+            "card1": row["card1"],
+            "card2": row["card2"],
+        }
+    )
 
 fobj.close()
-# occupation:mid-career,business owner,executive ; credit score: great,exellent ; income:100 000+ ; budget:100+
 
 # Tags: student (based on occupation),
 # business (based on occupation),

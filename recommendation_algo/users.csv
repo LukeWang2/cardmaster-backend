@@ -1,1 +1,7 @@
-username,travelFrequency,travelInterest,occupation,income,creditScore,budget
+username,travelFrequency,travelInterest,occupation,income,creditScore,budget,card1,card2
+janesmith45,true,true,midCareer,60000,good,500,1,0
+alexgreen87,false,false,freelance,45000,excellent,300,0,1
+emilybrown56,true,true,executive,120000,great,1000,1,1
+maxharrison99,true,true,businessOwner,80000,good,600,1,1
+sophieblue11,false,true,student,12000,fair,0,1,0
+liamgray78,true,false,earlyProfessional,35000,good,0,1,0
