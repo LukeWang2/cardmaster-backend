@@ -1,7 +1,6 @@
-import pandas as pd, numpy as np
+import numpy as np
 from bitarray import bitarray
 import csv
-
 from flask import Flask, request
 from userToBin import userToBin
 from sklearn.linear_model import LinearRegression
