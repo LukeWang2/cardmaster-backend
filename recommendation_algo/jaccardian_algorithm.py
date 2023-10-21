@@ -82,8 +82,8 @@ def recommend():
     """
 
     occupation = request.args["occupation"]
-    travelFrequency = request.args["travelFrequency"] == "true"
-    travelInterest = request.args["travelInterest"] == "true"
+    travelFrequency = request.args["travelFrequency"]
+    travelInterest = request.args["travelInterest"]
     creditScore = request.args["creditScore"]
     income = int(request.args["income"])
     budget = int(request.args["budget"])
