@@ -7,8 +7,8 @@ from sklearn.linear_model import LinearRegression
 from collections import defaultdict
 
 app = Flask(__name__)
-"""
-cards = [
+
+cards1 = [
     "United Quest℠ Card",
     "American Express® Gold Card",
     "Visa Signature® Flagship Rewards Credit Card",
@@ -30,7 +30,7 @@ cards = [
     "Chase Sapphire Reserve",
     "BankAmericard® Credit Card",
 ]
-"""
+
 # TODO
 cards = [
     "Pkb4VNKYiJEvo5piBvsW",
@@ -56,7 +56,7 @@ cards = [
 ]
 
 
-@app.route("/api/recommend", methods=["POST"])
+@app.route("/api/recommend", methods=["GET"])
 def recommend():
     """
     {"occupation":occupation
@@ -67,18 +67,13 @@ def recommend():
     "budget":budget
     }
     """
-    content_type = request.headers.get("Content-Type")
-    if content_type == "application/json":
-        data = request.json
-    else:
-        return "Not JSON"
 
-    occupation = data.get("occupation")
-    travelFrequency = data.get("travelFrequency")
-    travelInterest = data.get("travelInterest")
-    creditScore = data.get("creditScore")
-    income = data.get("income")
-    budget = data.get("budget")
+    occupation = request.args["occupation"]
+    travelFrequency = request.args["travelFrequency"] == "true"
+    travelInterest = request.args["travelInterest"] == "true"
+    creditScore = request.args["creditScore"]
+    income = int(request.args["income"])
+    budget = int(request.args["budget"])
 
     fprint = userToBin(
         occupation,
@@ -111,7 +106,7 @@ def recommend():
         user_similarity = 1 - (num_differences / 4)
         # Populate arrays
         for i in range(len(cards)):
-            sim_cards[i][idx] = row[cards[i]]
+            sim_cards[i][idx] = row[cards1[i]]
             user_sims[i][idx] = user_similarity
 
     recommends = []
