@@ -1,6 +1,6 @@
 import numpy as np
 from bitarray import bitarray
-import csv
+import csv, os
 from flask import Flask, request
 from userToBin import userToBin
 from sklearn.linear_model import LinearRegression
@@ -65,6 +65,9 @@ def recommend():
     fobj.close()
     return recommends
 
+
+if __name__ == "__main__":
+    app.run(port=os.getenv("PORT", 8000))
 
 # cards = ["card1", "card2"]  # TODO gen list of cards
 
