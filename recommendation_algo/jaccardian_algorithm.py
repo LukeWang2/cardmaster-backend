@@ -7,8 +7,7 @@ from sklearn.linear_model import LinearRegression
 from collections import defaultdict
 
 app = Flask(__name__)
-
-# TODO
+"""
 cards = [
     "United Quest℠ Card",
     "American Express® Gold Card",
@@ -30,6 +29,30 @@ cards = [
     "The Ink Business Cash® Credit Card",
     "Chase Sapphire Reserve",
     "BankAmericard® Credit Card",
+]
+"""
+# TODO
+cards = [
+    "Pkb4VNKYiJEvo5piBvsW",
+    "kdum5VinWV5NHsGfeZp7",
+    "XRqqOTCk3G7DfEt96OES",
+    "wVYXZfkNeHM7bQ7chnVP",
+    "MmfqUWWvm98x6Wvrb9Gj",
+    "aKkDn6b5bVFmoFrF8BQp",
+    "3TcNYs34HqAsbEhtDcKW",
+    "qurFjyFttrvW4X0T3eg0",
+    "VQRKnSwuBZUp9WaL0fQ3",
+    "gxOF8SKPwtgHqTDin7r6",
+    "9SI8oba9wY8HLGSFNYlz",
+    "kLF4mrmAEIGJf0KyCDbx",
+    "HEUKCG8yZ6STWkjjpyzF",
+    "SSt0CafI1oZGX1h0yhWc",
+    "D78LwTGr09V4zzRWbIvb",
+    "wAsQWdx013mJqCznOJVE",
+    "g449ZzEgbkK7VuvOgBfJ",
+    "07BbvecOJBxQLg09LMyS",
+    "zIbtxKxa8q0eifAFMCTU",
+    "wd9g1SsGjIY3vPdyjyms",
 ]
 
 
