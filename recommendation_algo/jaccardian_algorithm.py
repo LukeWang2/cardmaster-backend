@@ -4,6 +4,7 @@ import csv, os
 from flask import Flask, request
 from userToBin import userToBin
 from sklearn.linear_model import LinearRegression
+from collections import defaultdict
 
 app = Flask(__name__)
 
@@ -90,7 +91,9 @@ def recommend():
             sim_cards[i][idx] = row[cards[i]]
             user_sims[i][idx] = user_similarity
 
-    recommends = {}
+    recommends = []
+    allCards = defaultdict(list)
+    scores = [0] * 20
     # Get all relevant points and apply linear regression
     for j in range(len(cards)):
         x = user_sims[j].reshape((-1, 1))
@@ -98,9 +101,16 @@ def recommend():
         model = LinearRegression().fit(x, y)
         # Recommend card if there's over 50% chance that they will like it based
         # on similar users
-        recommends[cards[j]] = bool((model.intercept_ + model.coef_) > 0.5)
+        scores[j] = (model.intercept_ + model.coef_)[0]
+        allCards[scores[j]] += [cards[j]]
+
+    scores.sort(reverse=True)
+
+    for i in range(5):
+        recommends += allCards[scores[i]]
+
     fobj.close()
-    return recommends
+    return {i: recommends[i] for i in range(5)}
 
 
 if __name__ == "__main__":
