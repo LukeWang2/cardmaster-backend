@@ -5,6 +5,19 @@ from flask import Flask, request
 from userToBin import userToBin
 from sklearn.linear_model import LinearRegression
 from collections import defaultdict
+import firebase_admin
+from firebase_admin import credentials, firestore
+
+cred = credentials.Certificate("./service_account_key.json")
+firebase_admin.initialize_app(cred)
+
+db = firestore.client()
+
+
+def get_document(collection_name, document_id):
+    doc = db.collection(collection_name).document(document_id).get()
+    return doc.to_dict() if doc.exists else None
+
 
 app = Flask(__name__)
 
@@ -126,9 +139,10 @@ def recommend():
 
     for i in range(5):
         recommends += allCards[scores[i]]
+    recommends = list(set(recommends))
 
     fobj.close()
-    return {i: recommends[i] for i in range(5)}
+    return {i: get_document("credit_card", recommends[i]) for i in range(5)}
 
 
 if __name__ == "__main__":
