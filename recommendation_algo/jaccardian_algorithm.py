@@ -35,12 +35,25 @@ def recommend():
     )
 
     users = pd.read_csv("bin_users.csv")
-    sim_cards = np.ndarray((len(users.columns) - 2, len(users)))
+    colNum = len(users.columns)
+    sim_cards = np.ndarray((colNum - 2, len(users)))
+    user_sims = np.ndarray((colNum - 2, len(users)))
+
+    cards = []  # TODO gen list of cards
+
     for idx, row in users.iterrows():
         binary = bitarray(row["fingerprint"])
         fprintbinary = bitarray(fprint)
         differences = binary ^ fprintbinary
         num_differences = differences.count(1)
         user_similarity = 1 - (num_differences / 4)
-        for i in range(len(users.columns)):
-            sim_cards = users.iloc[:, i + 2]
+        for i in range(colNum):
+            sim_cards[i][idx] = users.iloc[:, i + 2]
+            user_sims[i][idx] = user_similarity
+    recommends = {}
+    for j in range(colNum):
+        x = user_sims[j].reshape((-1, 1))
+        y = sim_cards[j]
+        model = LinearRegression().fit(x, y)
+        recommends[cards[j]] = (model.intercept_ + model.coef_) > 0.5
+    return recommends
