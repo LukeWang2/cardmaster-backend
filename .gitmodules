@@ -1,0 +1,6 @@
+[submodule "other_repos/cardmaster-database"]
+	path = other_repos/cardmaster-database
+	url = https://github.com/shencynthia/cardmaster-database.git
+[submodule "other_repos/cardmaster"]
+	path = other_repos/cardmaster
+	url = https://github.com/mingchungx/cardmaster.git
