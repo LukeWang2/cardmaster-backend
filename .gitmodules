@@ -4,3 +4,9 @@
 [submodule "other_repos/cardmaster"]
 	path = other_repos/cardmaster
 	url = https://github.com/mingchungx/cardmaster.git
+[submodule "other_repos/cardmaster-website"]
+	path = other_repos/cardmaster-website
+	url = https://github.com/shencynthia/cardmaster-website
+[submodule "other_repos/cardmaster-assistant"]
+	path = other_repos/cardmaster-assistant
+	url = https://github.com/mingchungx/cardmaster-assistant.git
